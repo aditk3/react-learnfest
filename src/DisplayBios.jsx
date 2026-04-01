@@ -1,23 +1,14 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 import Developer from "./Developer";
 import DeveloperBioCard from "./DeveloperBioCard";
 
-export default class DisplayBios extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      developers: [
-        new Developer(1, "Adit", "Kapoor", "TS", 2016),
-        new Developer(2, "Joe", "Rock", "JS", 2000),
-      ],
-    };
-  }
-
-  render() {
-    return this.state.developers.map((dev) => (
-      <DeveloperBioCard key={dev.id} developer={dev} />
-    ));
-  }
+export default function DisplayBios(props) {
+  return props.developers.map((dev) => (
+    <DeveloperBioCard key={dev.id} developer={dev} />
+  ));
 }
+
+DisplayBios.propTypes = {
+  developers: PropTypes.arrayOf(PropTypes.instanceOf(Developer)),
+};
