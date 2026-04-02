@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import Developer from "./Developer";
+import { useNavigate } from "react-router-dom";
+import Developer from "../models/Developer";
 
 export default function AddDeveloper(props) {
+  let navigate = useNavigate();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [favoriteLanguage, setFavoriteLanguage] = useState("");
   const [yearStarted, setYearStarted] = useState("");
+
+  const [isValidForm, setIsValidForm] = useState(false);
+  const [isDirtyForm, setIsDirtyForm] = useState(false);
+
+  useEffect(() => {
+    let firstNameValid = firstName ? true : false;
+    let lastNameValid = lastName ? true : false;
+    let favoriteLanguageValid = favoriteLanguage ? true : false;
+    let yearStartedValid = !isNaN(yearStarted) && yearStarted;
+
+    setIsValidForm(
+      firstNameValid &&
+        lastNameValid &&
+        favoriteLanguageValid &&
+        yearStartedValid,
+    );
+
+    setIsDirtyForm(
+      firstNameValid ||
+        lastNameValid ||
+        favoriteLanguageValid ||
+        yearStartedValid,
+    );
+  }, [firstName, lastName, favoriteLanguage, yearStarted]);
 
   const handleSubmit = (e) => {
     let dev = new Developer(
@@ -18,8 +45,9 @@ export default function AddDeveloper(props) {
     );
 
     props.handleNewDeveloper(dev);
-
     e.preventDefault();
+
+    navigate("/developers");
   };
 
   return (
@@ -67,9 +95,17 @@ export default function AddDeveloper(props) {
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={!isValidForm}>
+            Submit
+          </button>
         </div>
       </form>
+
+      {!isValidForm && isDirtyForm && (
+        <div className="alert alert-danger">
+          All fields are required and year started must be numeric
+        </div>
+      )}
     </>
   );
 }

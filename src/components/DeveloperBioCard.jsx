@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import Developer from "./Developer";
+import Developer from "../models/Developer";
 
 function DeveloperBioCard(props) {
   return (
