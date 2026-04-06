@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import DeveloperBioCard from "../components/DeveloperBioCard";
 import { API_URL } from "../utils/constants";
+import { useContext } from "react";
+import DevelopersContext from "../contexts/developers";
 
 export default function DisplayBios() {
-  const [developers, setDevelopers] = useState([]);
+  const { developers, setDevelopers } = useContext(DevelopersContext);
 
   useEffect(() => {
     fetch(`${API_URL}/developers`)
