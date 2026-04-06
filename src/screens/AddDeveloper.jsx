@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import Developer from "../models/Developer";
+import { API_URL } from "../utils/constants";
 
-export default function AddDeveloper(props) {
+export default function AddDeveloper() {
   let navigate = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -35,19 +35,29 @@ export default function AddDeveloper(props) {
     );
   }, [firstName, lastName, favoriteLanguage, yearStarted]);
 
-  const handleSubmit = (e) => {
-    let dev = new Developer(
-      null,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    let body = {
       firstName,
       lastName,
       favoriteLanguage,
-      yearStarted,
-    );
+      yearStarted: parseInt(yearStarted, 10),
+    };
 
-    props.handleNewDeveloper(dev);
-    e.preventDefault();
+    try {
+      const response = await fetch(`${API_URL}/developers`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    navigate("/developers");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      navigate("/developers");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

@@ -1,14 +1,29 @@
-import PropTypes from "prop-types";
-
-import Developer from "../models/Developer";
+import { useEffect, useState } from "react";
 import DeveloperBioCard from "../components/DeveloperBioCard";
+import { API_URL } from "../utils/constants";
 
-export default function DisplayBios(props) {
-  return props.developers.map((dev) => (
-    <DeveloperBioCard key={dev.id} developer={dev} />
-  ));
+export default function DisplayBios() {
+  const [developers, setDevelopers] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/developers`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((data) => {
+        setDevelopers(data);
+      })
+      .catch((error) => console.error("Error fetching developers: " + error));
+  }, []);
+
+  return (
+    <>
+      <h1>Developers</h1>
+
+      {developers.map((dev) => (
+        <DeveloperBioCard key={dev.id} developer={dev} />
+      ))}
+    </>
+  );
 }
-
-DisplayBios.propTypes = {
-  developers: PropTypes.arrayOf(PropTypes.instanceOf(Developer)),
-};
