@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
+import AuthContext from "./contexts/auth";
 import AddDeveloper from "./screens/AddDeveloper";
 import DisplayBios from "./screens/DisplayBios";
-import Home from "./screens/Home";
-import { useContext } from "react";
-import AuthContext from "./contexts/auth";
 import ErrorScreen from "./screens/ErrorScreen";
+import Home from "./screens/Home";
 import Login from "./screens/Login";
 
 function App() {

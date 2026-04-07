@@ -8,6 +8,8 @@ export default function Login() {
 
   return (
     <>
+      <h1>Click to Login</h1>
+      
       <button
         className="btn btn-primary"
         onClick={() => {

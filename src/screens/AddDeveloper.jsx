@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../utils/constants";
+import { postDeveloper } from "../utils/devAPI";
 
 export default function AddDeveloper() {
   let navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function AddDeveloper() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     let body = {
       firstName,
       lastName,
@@ -46,14 +46,8 @@ export default function AddDeveloper() {
     };
 
     try {
-      const response = await fetch(`${API_URL}/developers`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
+      const response = await postDeveloper(body);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
       navigate("/developers");
     } catch (e) {
       console.error(e);

@@ -1,7 +1,5 @@
 function ErrorScreen() {
-  return (
-    <div>ErrorScreen: Invalid path</div>
-  )
+  return <div className="alert alert-danger">ErrorScreen: Invalid path</div>;
 }
 
-export default ErrorScreen
+export default ErrorScreen;
