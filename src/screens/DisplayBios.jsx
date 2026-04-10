@@ -1,15 +1,17 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DeveloperBioCard from "../components/DeveloperBioCard";
-import DevelopersContext from "../contexts/developers";
+import { setDevelopers } from "../features/developers/developersSlice";
 import { getDevelopers } from "../utils/devAPI";
 
 export default function DisplayBios() {
-  const { developers, setDevelopers } = useContext(DevelopersContext);
+  const developers = useSelector((state) => state.developers);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getDevelopers()
       .then((data) => {
-        setDevelopers(data);
+        dispatch(setDevelopers(data));
       })
       .catch((error) => console.error("Error fetching developers: " + error));
   }, []);
