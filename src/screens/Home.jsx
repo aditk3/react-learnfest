@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div className="text-center">
-      <h1>Developer Bios</h1>
+      <h1 className="mb-5 mb-lg-3">Developer Bios</h1>
 
       <div
         className={
@@ -24,7 +24,7 @@ export default function Home() {
         Status is: {status}
       </div>
 
-      <p>
+      <p className="lead mt-5 mt-lg-3">
         Welcome to dev bios. Use the navbar to browse bios or add a new
         developer.
       </p>

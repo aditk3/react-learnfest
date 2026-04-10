@@ -18,9 +18,11 @@ export default function DisplayBios() {
     <>
       <h1>Developers</h1>
 
-      {developers.map((dev) => (
-        <DeveloperBioCard key={dev.id} developer={dev} />
-      ))}
+      <div className="row">
+        {developers.map((dev) => (
+          <DeveloperBioCard key={dev.id} developer={dev} />
+        ))}
+      </div>
     </>
   );
 }
